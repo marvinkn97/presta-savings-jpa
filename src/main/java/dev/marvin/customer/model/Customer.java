@@ -9,14 +9,14 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="t_customer")
+@Table(name = "t_customer", uniqueConstraints = @UniqueConstraint(name = "customer_email_unique", columnNames = "email"))
 @Builder
 @Data
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(updatable = false)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "customer_id", updatable = false, nullable = false)
+    private Integer customerId;
 
     private String name;
 
@@ -26,15 +26,21 @@ public class Customer {
     @Column(nullable = false)
     private String password;
 
-    private String mobile;
+    @Column(name = "mobile_no")
+    private String mobileNo;
+
+    @Column(name = "government_id")
     private Integer governmentId;
 
     @CreationTimestamp
+    @Column(name = "created_date", nullable = false)
     private LocalDateTime createdDate;
 
     @UpdateTimestamp
+    @Column(name = "updated_date")
     private LocalDateTime updatedDate;
 
-    private String profilePic;
+    @Column(name = "profile_image_path")
+    private String profileImagePath;
 
 }
